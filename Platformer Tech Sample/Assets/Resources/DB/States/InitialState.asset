@@ -18,7 +18,7 @@ MonoBehaviour:
       Guid:
         Value: 1566452403617857191
     Behaviours: []
-    Tags: 00000000
+    Tags: 05000000
     Length: 65
     OverrideAnimation: 0
     Loop: 1
@@ -40,6 +40,6 @@ MonoBehaviour:
       type: {class: VelocityImpulse, ns: Quantum, asm: quantum.code}
       data:
         Velocity:
-          RawValue: 0
+          RawValue: 1310
         Duration:
-          RawValue: 0
+          RawValue: 65536

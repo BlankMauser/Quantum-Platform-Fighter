@@ -81,6 +81,16 @@ MonoBehaviour:
         Id:
           Value: 3004904473921469476
       ResourcePath: DB/Configs/DefaultCharacterController3D
+    - Path: Resources/DB/States/Emerson/Idle
+      AssetRef:
+        Id:
+          Value: 3107340284673347376
+      ResourcePath: DB/States/Emerson/Idle
+    - Path: Resources/DB/States/Emerson/Fair
+      AssetRef:
+        Id:
+          Value: 3212793503441604546
+      ResourcePath: DB/States/Emerson/Fair
     - Path: Resources/DB/PlatformConfigs/PlatformDemoConfig3
       AssetRef:
         Id:

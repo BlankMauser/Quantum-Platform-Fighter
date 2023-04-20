@@ -13,6 +13,7 @@ namespace Quantum {
 
         #endregion
 
+
         public virtual void UpdateBehaviours(Frame f, AbilityEntity* abilityEnt, EntityRef ent) {
             foreach (StateBehaviour sb in Behaviours) {
                 sb.Update(f, abilityEnt, ent);
