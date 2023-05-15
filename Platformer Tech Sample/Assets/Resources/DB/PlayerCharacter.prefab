@@ -379,15 +379,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Prototype:
     FSM:
-      InitialState:
+      Moveset:
         Id:
-          Value: 1566452403617857191
+          Value: 1293124923961604297
       CurrentState:
         Id:
           Value: 1566452403617857191
       PrevState:
         Id:
-          Value: 1566452403617857191
+          Value: 2726016637150437536
+      NextState:
+        Id:
+          Value: 0
     AnimationFrame: 0
     controllerType:
       Value: 0

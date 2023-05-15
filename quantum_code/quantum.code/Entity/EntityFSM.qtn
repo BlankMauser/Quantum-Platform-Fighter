@@ -5,7 +5,7 @@ asset State;
 component AbilityEntity {
 	
 	FSM FSM;
-	Int32 AnimationFrame;
+	Int16 AnimationFrame;
 	ControllerType controllerType;
 
 }
@@ -20,8 +20,9 @@ enum ControllerType {
 
 struct FSM
 {
-	asset_ref<State> InitialState;
+	asset_ref<StateSet> Moveset;
 	asset_ref<State> CurrentState;
 	asset_ref<State> PrevState;
+	asset_ref<State> NextState;
 
 }

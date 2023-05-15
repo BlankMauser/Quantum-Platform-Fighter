@@ -30,9 +30,28 @@ namespace Quantum {
     Platformer3D,
     Platformer2D,
   }
+  public enum InputType : int {
+    GROUND_IDLE,
+    AIR_IDLE,
+    WALK,
+    MID_DASH,
+    LATE_DASH,
+    DASH_TURN,
+    RUN_BREAK,
+    EARLY_RUN_TURN,
+    MID_RUN_TURN,
+  }
   [System.FlagsAttribute()]
   public enum InputButtons : int {
     Jump = 1 << 0,
+    Grab = 1 << 1,
+    Surf = 1 << 2,
+    Advance = 1 << 3,
+    Light = 1 << 4,
+    Attack = 1 << 5,
+    Heavy = 1 << 6,
+    Special = 1 << 7,
+    Shield = 1 << 8,
   }
   public static unsafe partial class InputButtons_ext {
     public static Boolean IsFlagSet(this InputButtons self, InputButtons flag) {
@@ -567,6 +586,48 @@ namespace Quantum {
     }
   }
   [StructLayout(LayoutKind.Explicit)]
+  [Quantum.AssetRefAttribute(typeof(AnimData))]
+  [System.SerializableAttribute()]
+  public unsafe partial struct AssetRefAnimData : IEquatable<AssetRefAnimData>, IAssetRef<AnimData> {
+    public const Int32 SIZE = 8;
+    public const Int32 ALIGNMENT = 8;
+    [FieldOffset(0)]
+    public AssetGuid Id;
+    public override String ToString() {
+      return AssetRef.ToString(Id);
+    }
+    public static implicit operator AssetRefAnimData(AnimData value) {
+      var r = default(AssetRefAnimData);
+      if (value != null) {
+        r.Id = value.Guid;
+      }
+      return r;
+    }
+    public override Boolean Equals(Object obj) {
+      return obj is AssetRefAnimData other && Equals(other);
+    }
+    public Boolean Equals(AssetRefAnimData other) {
+      return Id.Equals(other.Id);
+    }
+    public static Boolean operator ==(AssetRefAnimData a, AssetRefAnimData b) {
+      return a.Id == b.Id;
+    }
+    public static Boolean operator !=(AssetRefAnimData a, AssetRefAnimData b) {
+      return a.Id != b.Id;
+    }
+    public override Int32 GetHashCode() {
+      unchecked { 
+        var hash = 67;
+        hash = hash * 31 + Id.GetHashCode();
+        return hash;
+      }
+    }
+    public static void Serialize(void* ptr, FrameSerializer serializer) {
+        var p = (AssetRefAnimData*)ptr;
+        AssetGuid.Serialize(&p->Id, serializer);
+    }
+  }
+  [StructLayout(LayoutKind.Explicit)]
   [Quantum.AssetRefAttribute(typeof(PlatformConfig))]
   [System.SerializableAttribute()]
   public unsafe partial struct AssetRefPlatformConfig : IEquatable<AssetRefPlatformConfig>, IAssetRef<PlatformConfig> {
@@ -598,7 +659,7 @@ namespace Quantum {
     }
     public override Int32 GetHashCode() {
       unchecked { 
-        var hash = 67;
+        var hash = 71;
         hash = hash * 31 + Id.GetHashCode();
         return hash;
       }
@@ -640,7 +701,7 @@ namespace Quantum {
     }
     public override Int32 GetHashCode() {
       unchecked { 
-        var hash = 71;
+        var hash = 73;
         hash = hash * 31 + Id.GetHashCode();
         return hash;
       }
@@ -682,7 +743,7 @@ namespace Quantum {
     }
     public override Int32 GetHashCode() {
       unchecked { 
-        var hash = 73;
+        var hash = 79;
         hash = hash * 31 + Id.GetHashCode();
         return hash;
       }
@@ -724,7 +785,7 @@ namespace Quantum {
     }
     public override Int32 GetHashCode() {
       unchecked { 
-        var hash = 79;
+        var hash = 83;
         hash = hash * 31 + Id.GetHashCode();
         return hash;
       }
@@ -735,20 +796,65 @@ namespace Quantum {
     }
   }
   [StructLayout(LayoutKind.Explicit)]
+  [Quantum.AssetRefAttribute(typeof(attackData))]
+  [System.SerializableAttribute()]
+  public unsafe partial struct AssetRefattackData : IEquatable<AssetRefattackData>, IAssetRef<attackData> {
+    public const Int32 SIZE = 8;
+    public const Int32 ALIGNMENT = 8;
+    [FieldOffset(0)]
+    public AssetGuid Id;
+    public override String ToString() {
+      return AssetRef.ToString(Id);
+    }
+    public static implicit operator AssetRefattackData(attackData value) {
+      var r = default(AssetRefattackData);
+      if (value != null) {
+        r.Id = value.Guid;
+      }
+      return r;
+    }
+    public override Boolean Equals(Object obj) {
+      return obj is AssetRefattackData other && Equals(other);
+    }
+    public Boolean Equals(AssetRefattackData other) {
+      return Id.Equals(other.Id);
+    }
+    public static Boolean operator ==(AssetRefattackData a, AssetRefattackData b) {
+      return a.Id == b.Id;
+    }
+    public static Boolean operator !=(AssetRefattackData a, AssetRefattackData b) {
+      return a.Id != b.Id;
+    }
+    public override Int32 GetHashCode() {
+      unchecked { 
+        var hash = 89;
+        hash = hash * 31 + Id.GetHashCode();
+        return hash;
+      }
+    }
+    public static void Serialize(void* ptr, FrameSerializer serializer) {
+        var p = (AssetRefattackData*)ptr;
+        AssetGuid.Serialize(&p->Id, serializer);
+    }
+  }
+  [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct FSM {
-    public const Int32 SIZE = 24;
+    public const Int32 SIZE = 32;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(0)]
     public AssetRefState CurrentState;
+    [FieldOffset(24)]
+    public AssetRefStateSet Moveset;
     [FieldOffset(8)]
-    public AssetRefState InitialState;
+    public AssetRefState NextState;
     [FieldOffset(16)]
     public AssetRefState PrevState;
     public override Int32 GetHashCode() {
       unchecked { 
-        var hash = 83;
+        var hash = 97;
         hash = hash * 31 + CurrentState.GetHashCode();
-        hash = hash * 31 + InitialState.GetHashCode();
+        hash = hash * 31 + Moveset.GetHashCode();
+        hash = hash * 31 + NextState.GetHashCode();
         hash = hash * 31 + PrevState.GetHashCode();
         return hash;
       }
@@ -756,24 +862,55 @@ namespace Quantum {
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (FSM*)ptr;
         Quantum.AssetRefState.Serialize(&p->CurrentState, serializer);
-        Quantum.AssetRefState.Serialize(&p->InitialState, serializer);
+        Quantum.AssetRefState.Serialize(&p->NextState, serializer);
         Quantum.AssetRefState.Serialize(&p->PrevState, serializer);
+        Quantum.AssetRefStateSet.Serialize(&p->Moveset, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct Input {
-    public const Int32 SIZE = 32;
+    public const Int32 SIZE = 160;
     public const Int32 ALIGNMENT = 8;
-    [FieldOffset(16)]
-    public FPVector2 Direction;
     [FieldOffset(0)]
+    public Button Advance;
+    [FieldOffset(12)]
+    public Button Attack;
+    [FieldOffset(112)]
+    public FPVector2 Direction;
+    [FieldOffset(24)]
+    public Button Grab;
+    [FieldOffset(36)]
+    public Button Heavy;
+    [FieldOffset(48)]
     public Button Jump;
+    [FieldOffset(128)]
+    public FPVector2 LeftStick;
+    [FieldOffset(60)]
+    public Button Light;
+    [FieldOffset(144)]
+    public FPVector2 RightStick;
+    [FieldOffset(72)]
+    public Button Shield;
+    [FieldOffset(84)]
+    public Button Special;
+    [FieldOffset(96)]
+    public Button Surf;
     public const int MAX_COUNT = 6;
     public override Int32 GetHashCode() {
       unchecked { 
-        var hash = 89;
+        var hash = 101;
+        hash = hash * 31 + Advance.GetHashCode();
+        hash = hash * 31 + Attack.GetHashCode();
         hash = hash * 31 + Direction.GetHashCode();
+        hash = hash * 31 + Grab.GetHashCode();
+        hash = hash * 31 + Heavy.GetHashCode();
         hash = hash * 31 + Jump.GetHashCode();
+        hash = hash * 31 + LeftStick.GetHashCode();
+        hash = hash * 31 + Light.GetHashCode();
+        hash = hash * 31 + RightStick.GetHashCode();
+        hash = hash * 31 + Shield.GetHashCode();
+        hash = hash * 31 + Special.GetHashCode();
+        hash = hash * 31 + Surf.GetHashCode();
         return hash;
       }
     }
@@ -788,52 +925,78 @@ namespace Quantum {
     public Boolean IsDown(InputButtons button) {
       switch (button) {
         case InputButtons.Jump: return Jump.IsDown;
+        case InputButtons.Grab: return Grab.IsDown;
+        case InputButtons.Surf: return Surf.IsDown;
+        case InputButtons.Advance: return Advance.IsDown;
+        case InputButtons.Light: return Light.IsDown;
+        case InputButtons.Attack: return Attack.IsDown;
+        case InputButtons.Heavy: return Heavy.IsDown;
+        case InputButtons.Special: return Special.IsDown;
+        case InputButtons.Shield: return Shield.IsDown;
       }
       return false;
     }
     public Boolean WasPressed(InputButtons button) {
       switch (button) {
         case InputButtons.Jump: return Jump.WasPressed;
+        case InputButtons.Grab: return Grab.WasPressed;
+        case InputButtons.Surf: return Surf.WasPressed;
+        case InputButtons.Advance: return Advance.WasPressed;
+        case InputButtons.Light: return Light.WasPressed;
+        case InputButtons.Attack: return Attack.WasPressed;
+        case InputButtons.Heavy: return Heavy.WasPressed;
+        case InputButtons.Special: return Special.WasPressed;
+        case InputButtons.Shield: return Shield.WasPressed;
       }
       return false;
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (Input*)ptr;
+        Button.Serialize(&p->Advance, serializer);
+        Button.Serialize(&p->Attack, serializer);
+        Button.Serialize(&p->Grab, serializer);
+        Button.Serialize(&p->Heavy, serializer);
         Button.Serialize(&p->Jump, serializer);
+        Button.Serialize(&p->Light, serializer);
+        Button.Serialize(&p->Shield, serializer);
+        Button.Serialize(&p->Special, serializer);
+        Button.Serialize(&p->Surf, serializer);
         FPVector2.Serialize(&p->Direction, serializer);
+        FPVector2.Serialize(&p->LeftStick, serializer);
+        FPVector2.Serialize(&p->RightStick, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct _globals_ {
-    public const Int32 SIZE = 704;
+    public const Int32 SIZE = 1472;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(16)]
     public FP DeltaTime;
-    [FieldOffset(240)]
+    [FieldOffset(48)]
     public FrameMetaData FrameMetaData;
     [FieldOffset(0)]
     public AssetRefMap Map;
     [FieldOffset(24)]
     public NavMeshRegionMask NavMeshRegions;
-    [FieldOffset(408)]
+    [FieldOffset(1176)]
     public PhysicsSceneSettings PhysicsSettings;
     [FieldOffset(8)]
     public BitSet6 PlayerLastConnectionState;
     [FieldOffset(32)]
     public RNGSession RngSession;
-    [FieldOffset(280)]
+    [FieldOffset(88)]
     public BitSet1024 Systems;
-    [FieldOffset(48)]
+    [FieldOffset(216)]
     [FramePrinter.FixedArrayAttribute(typeof(Input), 6)]
-    private fixed Byte _input_[192];
+    private fixed Byte _input_[960];
     public FixedArray<Input> input {
       get {
-        fixed (byte* p = _input_) { return new FixedArray<Input>(p, 32, 6); }
+        fixed (byte* p = _input_) { return new FixedArray<Input>(p, 160, 6); }
       }
     }
     public override Int32 GetHashCode() {
       unchecked { 
-        var hash = 97;
+        var hash = 103;
         hash = hash * 31 + DeltaTime.GetHashCode();
         hash = hash * 31 + FrameMetaData.GetHashCode();
         hash = hash * 31 + Map.GetHashCode();
@@ -853,25 +1016,25 @@ namespace Quantum {
         FP.Serialize(&p->DeltaTime, serializer);
         NavMeshRegionMask.Serialize(&p->NavMeshRegions, serializer);
         RNGSession.Serialize(&p->RngSession, serializer);
-        FixedArray.Serialize(p->input, serializer, StaticDelegates.SerializeInput);
         FrameMetaData.Serialize(&p->FrameMetaData, serializer);
         Quantum.BitSet1024.Serialize(&p->Systems, serializer);
+        FixedArray.Serialize(p->input, serializer, StaticDelegates.SerializeInput);
         PhysicsSceneSettings.Serialize(&p->PhysicsSettings, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct AbilityEntity : Quantum.IComponent {
-    public const Int32 SIZE = 32;
+    public const Int32 SIZE = 40;
     public const Int32 ALIGNMENT = 8;
-    [FieldOffset(4)]
-    public Int32 AnimationFrame;
+    [FieldOffset(0)]
+    public Int16 AnimationFrame;
     [FieldOffset(8)]
     public FSM FSM;
-    [FieldOffset(0)]
+    [FieldOffset(4)]
     public ControllerType controllerType;
     public override Int32 GetHashCode() {
       unchecked { 
-        var hash = 101;
+        var hash = 107;
         hash = hash * 31 + AnimationFrame.GetHashCode();
         hash = hash * 31 + FSM.GetHashCode();
         hash = hash * 31 + (Int32)controllerType;
@@ -880,9 +1043,103 @@ namespace Quantum {
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (AbilityEntity*)ptr;
-        serializer.Stream.Serialize((Int32*)&p->controllerType);
         serializer.Stream.Serialize(&p->AnimationFrame);
+        serializer.Stream.Serialize((Int32*)&p->controllerType);
         Quantum.FSM.Serialize(&p->FSM, serializer);
+    }
+  }
+  [StructLayout(LayoutKind.Explicit)]
+  public unsafe partial struct Animator : Quantum.IComponent {
+    public const Int32 SIZE = 8;
+    public const Int32 ALIGNMENT = 8;
+    [FieldOffset(0)]
+    public AssetRefAnimData data;
+    public override Int32 GetHashCode() {
+      unchecked { 
+        var hash = 109;
+        hash = hash * 31 + data.GetHashCode();
+        return hash;
+      }
+    }
+    public static void Serialize(void* ptr, FrameSerializer serializer) {
+        var p = (Animator*)ptr;
+        Quantum.AssetRefAnimData.Serialize(&p->data, serializer);
+    }
+  }
+  [StructLayout(LayoutKind.Explicit)]
+  public unsafe partial struct BasicFields : Quantum.IComponent {
+    public const Int32 SIZE = 4;
+    public const Int32 ALIGNMENT = 4;
+    [FieldOffset(0)]
+    public InputType inputType;
+    public override Int32 GetHashCode() {
+      unchecked { 
+        var hash = 113;
+        hash = hash * 31 + (Int32)inputType;
+        return hash;
+      }
+    }
+    public static void Serialize(void* ptr, FrameSerializer serializer) {
+        var p = (BasicFields*)ptr;
+        serializer.Stream.Serialize((Int32*)&p->inputType);
+    }
+  }
+  [StructLayout(LayoutKind.Explicit)]
+  public unsafe partial struct HitboxTree : Quantum.IComponent {
+    public const Int32 SIZE = 16;
+    public const Int32 ALIGNMENT = 8;
+    [FieldOffset(8)]
+    public AssetRefattackData attacks;
+    [FieldOffset(0)]
+    [FramePrinter.PtrQDictionaryAttribute(typeof(EntityRef), typeof(Int32))]
+    private Quantum.Ptr entitiesHitPtr;
+    public QDictionaryPtr<EntityRef, Int32> entitiesHit {
+      get {
+        return new QDictionaryPtr<EntityRef, Int32>(entitiesHitPtr);
+      }
+      set {
+        entitiesHitPtr = value.Ptr;
+      }
+    }
+    public override Int32 GetHashCode() {
+      unchecked { 
+        var hash = 127;
+        hash = hash * 31 + attacks.GetHashCode();
+        hash = hash * 31 + entitiesHitPtr.GetHashCode();
+        return hash;
+      }
+    }
+    public void ClearPointers(Frame f, EntityRef entity) {
+      entitiesHitPtr = default;
+    }
+    public static void OnRemoved(FrameBase frame, EntityRef entity, void* ptr) {
+      var p = (HitboxTree*)ptr;
+      p->ClearPointers((Frame)frame, entity);
+    }
+    public static void Serialize(void* ptr, FrameSerializer serializer) {
+        var p = (HitboxTree*)ptr;
+        QDictionary.Serialize(p->entitiesHit, &p->entitiesHitPtr, serializer, StaticDelegates.SerializeEntityRef, StaticDelegates.SerializeInt32);
+        Quantum.AssetRefattackData.Serialize(&p->attacks, serializer);
+    }
+  }
+  [StructLayout(LayoutKind.Explicit)]
+  public unsafe partial struct HurtboxTree : Quantum.IComponent {
+    public const Int32 SIZE = 4;
+    public const Int32 ALIGNMENT = 2;
+    [FieldOffset(2)]
+    private fixed Byte _alignment_padding_[2];
+    [FieldOffset(0)]
+    public Int16 enabledHurtboxes;
+    public override Int32 GetHashCode() {
+      unchecked { 
+        var hash = 131;
+        hash = hash * 31 + enabledHurtboxes.GetHashCode();
+        return hash;
+      }
+    }
+    public static void Serialize(void* ptr, FrameSerializer serializer) {
+        var p = (HurtboxTree*)ptr;
+        serializer.Stream.Serialize(&p->enabledHurtboxes);
     }
   }
   [StructLayout(LayoutKind.Explicit)]
@@ -938,7 +1195,7 @@ namespace Quantum {
     public FP ZMovementAccumulatedTime;
     public override Int32 GetHashCode() {
       unchecked { 
-        var hash = 103;
+        var hash = 137;
         hash = hash * 31 + CanMove.GetHashCode();
         hash = hash * 31 + Config.GetHashCode();
         hash = hash * 31 + LastMovementCurveEvaluation.GetHashCode();
@@ -986,7 +1243,7 @@ namespace Quantum {
     public PlayerRef Player;
     public override Int32 GetHashCode() {
       unchecked { 
-        var hash = 107;
+        var hash = 139;
         hash = hash * 31 + Player.GetHashCode();
         return hash;
       }
@@ -1022,7 +1279,7 @@ namespace Quantum {
     public FPQuaternion PlatformDeltaRotation;
     public override Int32 GetHashCode() {
       unchecked { 
-        var hash = 109;
+        var hash = 149;
         hash = hash * 31 + CollidingWithPlatform.GetHashCode();
         hash = hash * 31 + Config.GetHashCode();
         hash = hash * 31 + Entity.GetHashCode();
@@ -1057,6 +1314,10 @@ namespace Quantum {
     static partial void InitStaticGen() {
       ComponentTypeId.Setup(() => {
         ComponentTypeId.Add<Quantum.AbilityEntity>(Quantum.AbilityEntity.Serialize, null, null, ComponentFlags.None);
+        ComponentTypeId.Add<Quantum.Animator>(Quantum.Animator.Serialize, null, null, ComponentFlags.None);
+        ComponentTypeId.Add<Quantum.BasicFields>(Quantum.BasicFields.Serialize, null, null, ComponentFlags.None);
+        ComponentTypeId.Add<Quantum.HitboxTree>(Quantum.HitboxTree.Serialize, null, Quantum.HitboxTree.OnRemoved, ComponentFlags.None);
+        ComponentTypeId.Add<Quantum.HurtboxTree>(Quantum.HurtboxTree.Serialize, null, null, ComponentFlags.None);
         ComponentTypeId.Add<Quantum.Platform>(Quantum.Platform.Serialize, null, null, ComponentFlags.None);
         ComponentTypeId.Add<Quantum.PlayerLink>(Quantum.PlayerLink.Serialize, null, null, ComponentFlags.None);
         ComponentTypeId.Add<Quantum.PlayerPlatformController>(Quantum.PlayerPlatformController.Serialize, null, null, ComponentFlags.None);
@@ -1068,10 +1329,18 @@ namespace Quantum {
       _ComponentSignalsOnRemoved = new ComponentReactiveCallbackInvoker[ComponentTypeId.Type.Length];
       BuildSignalsArrayOnComponentAdded<Quantum.AbilityEntity>();
       BuildSignalsArrayOnComponentRemoved<Quantum.AbilityEntity>();
+      BuildSignalsArrayOnComponentAdded<Quantum.Animator>();
+      BuildSignalsArrayOnComponentRemoved<Quantum.Animator>();
+      BuildSignalsArrayOnComponentAdded<Quantum.BasicFields>();
+      BuildSignalsArrayOnComponentRemoved<Quantum.BasicFields>();
       BuildSignalsArrayOnComponentAdded<CharacterController2D>();
       BuildSignalsArrayOnComponentRemoved<CharacterController2D>();
       BuildSignalsArrayOnComponentAdded<CharacterController3D>();
       BuildSignalsArrayOnComponentRemoved<CharacterController3D>();
+      BuildSignalsArrayOnComponentAdded<Quantum.HitboxTree>();
+      BuildSignalsArrayOnComponentRemoved<Quantum.HitboxTree>();
+      BuildSignalsArrayOnComponentAdded<Quantum.HurtboxTree>();
+      BuildSignalsArrayOnComponentRemoved<Quantum.HurtboxTree>();
       BuildSignalsArrayOnComponentAdded<MapEntityLink>();
       BuildSignalsArrayOnComponentRemoved<MapEntityLink>();
       BuildSignalsArrayOnComponentAdded<NavMeshAvoidanceAgent>();
@@ -1110,6 +1379,16 @@ namespace Quantum {
       var i = _globals->input.GetPointer(player);
       i->Jump = i->Jump.Update(this.Number, input.Jump);
       i->Direction = input.Direction;
+      i->LeftStick = input.LeftStick;
+      i->RightStick = input.RightStick;
+      i->Grab = i->Grab.Update(this.Number, input.Grab);
+      i->Surf = i->Surf.Update(this.Number, input.Surf);
+      i->Advance = i->Advance.Update(this.Number, input.Advance);
+      i->Light = i->Light.Update(this.Number, input.Light);
+      i->Attack = i->Attack.Update(this.Number, input.Attack);
+      i->Heavy = i->Heavy.Update(this.Number, input.Heavy);
+      i->Special = i->Special.Update(this.Number, input.Special);
+      i->Shield = i->Shield.Update(this.Number, input.Shield);
     }
     public Input* GetPlayerInput(Int32 player) {
       if ((uint)player >= (uint)_globals->input.Length) { throw new System.ArgumentOutOfRangeException("player"); }
@@ -1131,6 +1410,12 @@ namespace Quantum {
       }
     }
     public unsafe partial struct FrameAssets {
+      public AnimData AnimData(AssetRefAnimData assetRef) {
+         return _f.FindAsset<AnimData>(assetRef.Id);
+      }
+      public attackData attackData(AssetRefattackData assetRef) {
+         return _f.FindAsset<attackData>(assetRef.Id);
+      }
       public StateSet StateSet(AssetRefStateSet assetRef) {
          return _f.FindAsset<StateSet>(assetRef.Id);
       }
@@ -1146,6 +1431,9 @@ namespace Quantum {
     }
   }
   public static unsafe partial class BitStreamExtensions {
+    public static void Serialize(this IBitStream stream, ref AssetRefAnimData value) {
+      stream.Serialize(ref value.Id.Value);
+    }
     public static void Serialize(this IBitStream stream, ref AssetRefPlatformConfig value) {
       stream.Serialize(ref value.Id.Value);
     }
@@ -1158,6 +1446,15 @@ namespace Quantum {
     public static void Serialize(this IBitStream stream, ref AssetRefStateSet value) {
       stream.Serialize(ref value.Id.Value);
     }
+    public static void Serialize(this IBitStream stream, ref AssetRefattackData value) {
+      stream.Serialize(ref value.Id.Value);
+    }
+  }
+  [System.SerializableAttribute()]
+  public unsafe partial class AnimData : AssetObject {
+  }
+  [System.SerializableAttribute()]
+  public unsafe partial class attackData : AssetObject {
   }
   [System.SerializableAttribute()]
   public unsafe partial class StateSet : AssetObject {
@@ -1175,6 +1472,18 @@ namespace Quantum {
     public virtual void Visit(Prototypes.AbilityEntity_Prototype prototype) {
       VisitFallback(prototype);
     }
+    public virtual void Visit(Prototypes.Animator_Prototype prototype) {
+      VisitFallback(prototype);
+    }
+    public virtual void Visit(Prototypes.BasicFields_Prototype prototype) {
+      VisitFallback(prototype);
+    }
+    public virtual void Visit(Prototypes.HitboxTree_Prototype prototype) {
+      VisitFallback(prototype);
+    }
+    public virtual void Visit(Prototypes.HurtboxTree_Prototype prototype) {
+      VisitFallback(prototype);
+    }
     public virtual void Visit(Prototypes.Platform_Prototype prototype) {
       VisitFallback(prototype);
     }
@@ -1188,15 +1497,21 @@ namespace Quantum {
   public static unsafe partial class Constants {
   }
   public static unsafe partial class StaticDelegates {
+    public static FrameSerializer.Delegate SerializeEntityRef;
+    public static FrameSerializer.Delegate SerializeInt32;
     public static FrameSerializer.Delegate SerializeInput;
     static partial void InitGen() {
+      SerializeEntityRef = EntityRef.Serialize;
+      SerializeInt32 = (v, s) => {{ s.Stream.Serialize((Int32*)v); }};
       SerializeInput = Quantum.Input.Serialize;
     }
   }
   public unsafe partial class TypeRegistry {
     partial void AddGenerated() {
       Register(typeof(Quantum.AbilityEntity), Quantum.AbilityEntity.SIZE);
+      Register(typeof(Quantum.Animator), Quantum.Animator.SIZE);
       Register(typeof(AssetGuid), AssetGuid.SIZE);
+      Register(typeof(Quantum.AssetRefAnimData), Quantum.AssetRefAnimData.SIZE);
       Register(typeof(AssetRefCharacterController2DConfig), AssetRefCharacterController2DConfig.SIZE);
       Register(typeof(AssetRefCharacterController3DConfig), AssetRefCharacterController3DConfig.SIZE);
       Register(typeof(AssetRefEntityPrototype), AssetRefEntityPrototype.SIZE);
@@ -1211,6 +1526,8 @@ namespace Quantum {
       Register(typeof(Quantum.AssetRefState), Quantum.AssetRefState.SIZE);
       Register(typeof(Quantum.AssetRefStateSet), Quantum.AssetRefStateSet.SIZE);
       Register(typeof(AssetRefTerrainCollider), AssetRefTerrainCollider.SIZE);
+      Register(typeof(Quantum.AssetRefattackData), Quantum.AssetRefattackData.SIZE);
+      Register(typeof(Quantum.BasicFields), Quantum.BasicFields.SIZE);
       Register(typeof(Quantum.BitSet1024), Quantum.BitSet1024.SIZE);
       Register(typeof(Quantum.BitSet128), Quantum.BitSet128.SIZE);
       Register(typeof(Quantum.BitSet2048), Quantum.BitSet2048.SIZE);
@@ -1243,8 +1560,11 @@ namespace Quantum {
       Register(typeof(HingeJoint3D), HingeJoint3D.SIZE);
       Register(typeof(Hit), Hit.SIZE);
       Register(typeof(Hit3D), Hit3D.SIZE);
+      Register(typeof(Quantum.HitboxTree), Quantum.HitboxTree.SIZE);
+      Register(typeof(Quantum.HurtboxTree), Quantum.HurtboxTree.SIZE);
       Register(typeof(Quantum.Input), Quantum.Input.SIZE);
       Register(typeof(Quantum.InputButtons), 4);
+      Register(typeof(Quantum.InputType), 4);
       Register(typeof(Joint), Joint.SIZE);
       Register(typeof(Joint3D), Joint3D.SIZE);
       Register(typeof(LayerMask), LayerMask.SIZE);
@@ -1286,12 +1606,15 @@ namespace Quantum {
   }
   public unsafe partial class FramePrinterGen {
     public static void EnsureNotStripped() {
+      FramePrinter.EnsurePrimitiveNotStripped<Quantum.AssetRefAnimData>();
       FramePrinter.EnsurePrimitiveNotStripped<Quantum.AssetRefPlatformConfig>();
       FramePrinter.EnsurePrimitiveNotStripped<Quantum.AssetRefPlatformControllerConfig>();
       FramePrinter.EnsurePrimitiveNotStripped<Quantum.AssetRefState>();
       FramePrinter.EnsurePrimitiveNotStripped<Quantum.AssetRefStateSet>();
+      FramePrinter.EnsurePrimitiveNotStripped<Quantum.AssetRefattackData>();
       FramePrinter.EnsurePrimitiveNotStripped<Quantum.ControllerType>();
       FramePrinter.EnsurePrimitiveNotStripped<Quantum.InputButtons>();
+      FramePrinter.EnsurePrimitiveNotStripped<Quantum.InputType>();
       FramePrinter.EnsurePrimitiveNotStripped<Quantum.PlatformAxis>();
     }
   }
@@ -1322,6 +1645,17 @@ namespace Quantum.Prototypes {
     }
   }
   [System.SerializableAttribute()]
+  [Prototype(typeof(InputType))]
+  public unsafe partial struct InputType_Prototype {
+    public Int32 Value;
+    public static implicit operator InputType(InputType_Prototype value) {
+        return (InputType)value.Value;
+    }
+    public static implicit operator InputType_Prototype(InputType value) {
+        return new InputType_Prototype() { Value = (Int32)value };
+    }
+  }
+  [System.SerializableAttribute()]
   [Prototype(typeof(InputButtons))]
   public unsafe partial struct InputButtons_Prototype {
     public Int32 Value;
@@ -1344,10 +1678,16 @@ namespace Quantum.Prototypes {
     }
   }
   [System.SerializableAttribute()]
+  [Prototype(typeof(KeyValuePair<EntityRef, Int32>))]
+  public unsafe partial class DictionaryEntry_EntityRef_Int32_Prototype : DictionaryEntryPrototype {
+    public MapEntityId Key;
+    public Int32 Value;
+  }
+  [System.SerializableAttribute()]
   [Prototype(typeof(AbilityEntity))]
   public sealed unsafe partial class AbilityEntity_Prototype : ComponentPrototype<AbilityEntity> {
     public FSM_Prototype FSM;
-    public Int32 AnimationFrame;
+    public Int16 AnimationFrame;
     public ControllerType_Prototype controllerType;
     partial void MaterializeUser(Frame frame, ref AbilityEntity result, in PrototypeMaterializationContext context);
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
@@ -1366,17 +1706,107 @@ namespace Quantum.Prototypes {
     }
   }
   [System.SerializableAttribute()]
+  [Prototype(typeof(Animator))]
+  public sealed unsafe partial class Animator_Prototype : ComponentPrototype<Animator> {
+    public AssetRefAnimData data;
+    partial void MaterializeUser(Frame frame, ref Animator result, in PrototypeMaterializationContext context);
+    public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
+      Animator component = default;
+      Materialize((Frame)f, ref component, in context);
+      return f.Set(entity, component) == SetResult.ComponentAdded;
+    }
+    public void Materialize(Frame frame, ref Animator result, in PrototypeMaterializationContext context) {
+      result.data = this.data;
+      MaterializeUser(frame, ref result, in context);
+    }
+    public override void Dispatch(ComponentPrototypeVisitorBase visitor) {
+      ((ComponentPrototypeVisitor)visitor).Visit(this);
+    }
+  }
+  [System.SerializableAttribute()]
+  [Prototype(typeof(BasicFields))]
+  public sealed unsafe partial class BasicFields_Prototype : ComponentPrototype<BasicFields> {
+    public InputType_Prototype inputType;
+    partial void MaterializeUser(Frame frame, ref BasicFields result, in PrototypeMaterializationContext context);
+    public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
+      BasicFields component = default;
+      Materialize((Frame)f, ref component, in context);
+      return f.Set(entity, component) == SetResult.ComponentAdded;
+    }
+    public void Materialize(Frame frame, ref BasicFields result, in PrototypeMaterializationContext context) {
+      result.inputType = this.inputType;
+      MaterializeUser(frame, ref result, in context);
+    }
+    public override void Dispatch(ComponentPrototypeVisitorBase visitor) {
+      ((ComponentPrototypeVisitor)visitor).Visit(this);
+    }
+  }
+  [System.SerializableAttribute()]
   [Prototype(typeof(FSM))]
   public sealed unsafe partial class FSM_Prototype : StructPrototype {
-    public AssetRefState InitialState;
+    public AssetRefStateSet Moveset;
     public AssetRefState CurrentState;
     public AssetRefState PrevState;
+    public AssetRefState NextState;
     partial void MaterializeUser(Frame frame, ref FSM result, in PrototypeMaterializationContext context);
     public void Materialize(Frame frame, ref FSM result, in PrototypeMaterializationContext context) {
       result.CurrentState = this.CurrentState;
-      result.InitialState = this.InitialState;
+      result.Moveset = this.Moveset;
+      result.NextState = this.NextState;
       result.PrevState = this.PrevState;
       MaterializeUser(frame, ref result, in context);
+    }
+  }
+  [System.SerializableAttribute()]
+  [Prototype(typeof(HitboxTree))]
+  public sealed unsafe partial class HitboxTree_Prototype : ComponentPrototype<HitboxTree> {
+    public AssetRefattackData attacks;
+    [DictionaryAttribute()]
+    [DynamicCollectionAttribute()]
+    public DictionaryEntry_EntityRef_Int32_Prototype[] entitiesHit = {};
+    partial void MaterializeUser(Frame frame, ref HitboxTree result, in PrototypeMaterializationContext context);
+    public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
+      HitboxTree component = default;
+      Materialize((Frame)f, ref component, in context);
+      return f.Set(entity, component) == SetResult.ComponentAdded;
+    }
+    public void Materialize(Frame frame, ref HitboxTree result, in PrototypeMaterializationContext context) {
+      result.attacks = this.attacks;
+      if (this.entitiesHit.Length == 0) {
+        result.entitiesHit = default;
+      } else {
+        var dict = frame.AllocateDictionary(result.entitiesHit, this.entitiesHit.Length);
+        for (int i = 0; i < this.entitiesHit.Length; ++i) {
+          EntityRef tmpKey = default;
+          Int32 tmpValue = default;
+          PrototypeValidator.FindMapEntity(this.entitiesHit[i].Key, in context, out tmpKey);
+          tmpValue = this.entitiesHit[i].Value;
+          PrototypeValidator.AddToDictionary(dict, tmpKey, tmpValue, in context);
+        }
+        result.entitiesHit = dict;
+      }
+      MaterializeUser(frame, ref result, in context);
+    }
+    public override void Dispatch(ComponentPrototypeVisitorBase visitor) {
+      ((ComponentPrototypeVisitor)visitor).Visit(this);
+    }
+  }
+  [System.SerializableAttribute()]
+  [Prototype(typeof(HurtboxTree))]
+  public sealed unsafe partial class HurtboxTree_Prototype : ComponentPrototype<HurtboxTree> {
+    public Int16 enabledHurtboxes;
+    partial void MaterializeUser(Frame frame, ref HurtboxTree result, in PrototypeMaterializationContext context);
+    public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
+      HurtboxTree component = default;
+      Materialize((Frame)f, ref component, in context);
+      return f.Set(entity, component) == SetResult.ComponentAdded;
+    }
+    public void Materialize(Frame frame, ref HurtboxTree result, in PrototypeMaterializationContext context) {
+      result.enabledHurtboxes = this.enabledHurtboxes;
+      MaterializeUser(frame, ref result, in context);
+    }
+    public override void Dispatch(ComponentPrototypeVisitorBase visitor) {
+      ((ComponentPrototypeVisitor)visitor).Visit(this);
     }
   }
   [System.SerializableAttribute()]
@@ -1384,10 +1814,30 @@ namespace Quantum.Prototypes {
   public sealed unsafe partial class Input_Prototype : StructPrototype {
     public Button Jump;
     public FPVector2 Direction;
+    public FPVector2 LeftStick;
+    public FPVector2 RightStick;
+    public Button Grab;
+    public Button Surf;
+    public Button Advance;
+    public Button Light;
+    public Button Attack;
+    public Button Heavy;
+    public Button Special;
+    public Button Shield;
     partial void MaterializeUser(Frame frame, ref Input result, in PrototypeMaterializationContext context);
     public void Materialize(Frame frame, ref Input result, in PrototypeMaterializationContext context) {
+      result.Advance = this.Advance;
+      result.Attack = this.Attack;
       result.Direction = this.Direction;
+      result.Grab = this.Grab;
+      result.Heavy = this.Heavy;
       result.Jump = this.Jump;
+      result.LeftStick = this.LeftStick;
+      result.Light = this.Light;
+      result.RightStick = this.RightStick;
+      result.Shield = this.Shield;
+      result.Special = this.Special;
+      result.Surf = this.Surf;
       MaterializeUser(frame, ref result, in context);
     }
   }
@@ -1461,6 +1911,14 @@ namespace Quantum.Prototypes {
     [ArrayLength(0, 1)]
     public List<Prototypes.AbilityEntity_Prototype> AbilityEntity;
     [ArrayLength(0, 1)]
+    public List<Prototypes.Animator_Prototype> Animator;
+    [ArrayLength(0, 1)]
+    public List<Prototypes.BasicFields_Prototype> BasicFields;
+    [ArrayLength(0, 1)]
+    public List<Prototypes.HitboxTree_Prototype> HitboxTree;
+    [ArrayLength(0, 1)]
+    public List<Prototypes.HurtboxTree_Prototype> HurtboxTree;
+    [ArrayLength(0, 1)]
     public List<Prototypes.Platform_Prototype> Platform;
     [ArrayLength(0, 1)]
     public List<Prototypes.PlayerLink_Prototype> PlayerLink;
@@ -1468,6 +1926,10 @@ namespace Quantum.Prototypes {
     public List<Prototypes.PlayerPlatformController_Prototype> PlayerPlatformController;
     partial void CollectGen(List<ComponentPrototype> target) {
       Collect(AbilityEntity, target);
+      Collect(Animator, target);
+      Collect(BasicFields, target);
+      Collect(HitboxTree, target);
+      Collect(HurtboxTree, target);
       Collect(Platform, target);
       Collect(PlayerLink, target);
       Collect(PlayerPlatformController, target);
@@ -1475,6 +1937,18 @@ namespace Quantum.Prototypes {
     public unsafe partial class StoreVisitor {
       public override void Visit(Prototypes.AbilityEntity_Prototype prototype) {
         Storage.Store(prototype, ref Storage.AbilityEntity);
+      }
+      public override void Visit(Prototypes.Animator_Prototype prototype) {
+        Storage.Store(prototype, ref Storage.Animator);
+      }
+      public override void Visit(Prototypes.BasicFields_Prototype prototype) {
+        Storage.Store(prototype, ref Storage.BasicFields);
+      }
+      public override void Visit(Prototypes.HitboxTree_Prototype prototype) {
+        Storage.Store(prototype, ref Storage.HitboxTree);
+      }
+      public override void Visit(Prototypes.HurtboxTree_Prototype prototype) {
+        Storage.Store(prototype, ref Storage.HurtboxTree);
       }
       public override void Visit(Prototypes.Platform_Prototype prototype) {
         Storage.Store(prototype, ref Storage.Platform);

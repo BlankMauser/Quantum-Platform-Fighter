@@ -11,10 +11,21 @@ namespace Quantum {
 
             }
 
+        public virtual void OnEnter(Frame f, AbilityEntity* abilityEnt, EntityRef ent) {
+
+
+            }
+
         public virtual void Update(Frame f, AbilityEntity* abilityEnt, EntityRef ent) {
 
 
             }
+
+        public virtual void OnExit(Frame f, AbilityEntity* abilityEnt, EntityRef ent) {
+
+
+            }
+
 
         }
 

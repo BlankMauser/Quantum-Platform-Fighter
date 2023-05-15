@@ -28,6 +28,7 @@ public class QuantumAOT {
   public List<Quantum.MapStaticCollider2D> MapStaticCollider2D;
   public List<Quantum.MapStaticCollider3D> MapStaticCollider3D;
   public List<Quantum.StateTags> StateTags;
+  public List<Quantum.TransitionCheck> TransitionCheck;
   public List<System.Byte> Byte;
   public List<System.Int32> Int32;
 }

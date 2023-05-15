@@ -1,0 +1,19 @@
+﻿//Attack Assets
+asset attackData;
+
+component HitboxTree {
+
+asset_ref<attackData> attacks;
+
+//Dictionary keeping track of which entities hit and last tick they've been hit.
+dictionary<EntityRef, Int32> entitiesHit;
+
+}
+
+component HurtboxTree {
+
+//Bitmask representing which hurtboxes are enabled.
+Int16 enabledHurtboxes;
+
+}
+

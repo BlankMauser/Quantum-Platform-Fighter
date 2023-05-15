@@ -1,0 +1,7 @@
+﻿asset AnimData;
+
+component Animator {
+
+asset_ref<AnimData> data;
+
+}

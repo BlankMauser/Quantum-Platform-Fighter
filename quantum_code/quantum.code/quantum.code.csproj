@@ -71,12 +71,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animation\AnimatedBehaviour.cs" />
+    <Compile Include="Animation\AnimData.cs" />
+    <Compile Include="Animation\Behaviours\HitboxAnimator.cs" />
+    <Compile Include="Animation\Behaviours\HurtboxAnimator.cs" />
+    <Compile Include="Animation\Behaviours\JointAnimator.cs" />
     <Compile Include="CommandSetup.User.cs" />
     <Compile Include="Core\CodeGen.cs" />
     <Compile Include="CommandSetup.Legacy.cs" />
     <Compile Include="Core\Core.cs" />
+    <Compile Include="Entity\Combat\CombatTags.cs" />
+    <Compile Include="Entity\Combat\Damage\DamageCollision.cs" />
+    <Compile Include="Entity\States\Basic\BSC_Dash.cs" />
     <Compile Include="Entity\States\StateBehaviour.cs" />
-    <Compile Include="Entity\States\Transition Conditions\Basic\CheckGrounded.cs" />
+    <Compile Include="Entity\States\StateExtensions.cs" />
+    <Compile Include="Entity\States\Transition Conditions\Basic\GroundedCheck.cs" />
+    <Compile Include="Entity\States\Transition Conditions\Basic\StateTagsEntry.cs" />
+    <Compile Include="Entity\States\Transition Conditions\Input\InputAnalogCheck.cs" />
     <Compile Include="Entity\States\Transition Conditions\TransitionCondition.cs" />
     <Compile Include="Frame.User.cs" />
     <Compile Include="FrameContext.User.cs" />
@@ -87,6 +98,8 @@
     <Compile Include="Entity\States\Behaviours\VelocityImpulse.cs" />
     <Compile Include="Entity\States\StateSet.cs" />
     <Compile Include="Entity\States\StateTags.cs" />
+    <Compile Include="Input\InputManager.cs" />
+    <Compile Include="Physics\3DController\Controller3D.cs" />
     <Compile Include="Platformer\Platform.cs" />
     <Compile Include="Platformer\PlatformConfig.cs" />
     <Compile Include="Platformer\PlayerPlatformController.cs" />
@@ -111,7 +124,10 @@
     <EmbeddedResource Include="db.json" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Platformer\DSL\Input.qtn" />
+    <None Include="Animation\Animation.qtn" />
+    <None Include="Entity\Combat\Damage\HitboxColliders.qtn" />
+    <None Include="Entity\States\StateFields.qtn" />
+    <None Include="Input\Input.qtn" />
     <None Include="Platformer\DSL\PlayerLink.qtn" />
     <None Include="Entity\EntityFSM.qtn" />
   </ItemGroup>
@@ -121,9 +137,9 @@
     <Content Include="Platformer\DSL\PlayerPlatformController.qtn" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Animation\Events\" />
+    <Folder Include="Entity\Combat\Passives\" />
     <Folder Include="Entity\States\Transition Conditions\Combat\" />
-    <Folder Include="Entity\States\Transition Conditions\Input\" />
-    <Folder Include="Input\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

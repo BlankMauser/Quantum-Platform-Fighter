@@ -86,6 +86,7 @@ MonoBehaviour:
     MapEntities: []
   Prototypes:
   - AbilityEntity: []
+    BasicFields: []
     Platform:
     - Config:
         Id:
@@ -175,6 +176,7 @@ MonoBehaviour:
     PhysicsJoints2D: []
     PhysicsJoints3D: []
   - AbilityEntity: []
+    BasicFields: []
     Platform:
     - Config:
         Id:
@@ -264,6 +266,7 @@ MonoBehaviour:
     PhysicsJoints2D: []
     PhysicsJoints3D: []
   - AbilityEntity: []
+    BasicFields: []
     Platform:
     - Config:
         Id:
@@ -353,6 +356,7 @@ MonoBehaviour:
     PhysicsJoints2D: []
     PhysicsJoints3D: []
   - AbilityEntity: []
+    BasicFields: []
     Platform:
     - Config:
         Id:
@@ -442,6 +446,7 @@ MonoBehaviour:
     PhysicsJoints2D: []
     PhysicsJoints3D: []
   - AbilityEntity: []
+    BasicFields: []
     Platform:
     - Config:
         Id:

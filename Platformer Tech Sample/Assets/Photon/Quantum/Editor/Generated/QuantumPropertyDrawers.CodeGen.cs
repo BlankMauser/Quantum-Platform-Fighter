@@ -8,6 +8,13 @@ namespace Quantum.Editor {
   using UnityEngine;
   using UnityEditor;
 
+  [CustomPropertyDrawer(typeof(AssetRefAnimData))]
+  public class AssetRefAnimDataPropertyDrawer : PropertyDrawer {
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+      AssetRefDrawer.DrawAssetRefSelector(position, property, label, typeof(AnimDataAsset));
+    }
+  }
+
   [CustomPropertyDrawer(typeof(AssetRefPlatformConfig))]
   public class AssetRefPlatformConfigPropertyDrawer : PropertyDrawer {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
@@ -36,7 +43,15 @@ namespace Quantum.Editor {
     }
   }
 
+  [CustomPropertyDrawer(typeof(AssetRefattackData))]
+  public class AssetRefattackDataPropertyDrawer : PropertyDrawer {
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+      AssetRefDrawer.DrawAssetRefSelector(position, property, label, typeof(attackDataAsset));
+    }
+  }
+
   [CustomPropertyDrawer(typeof(Quantum.Prototypes.ControllerType_Prototype))]
+  [CustomPropertyDrawer(typeof(Quantum.Prototypes.InputType_Prototype))]
   [CustomPropertyDrawer(typeof(Quantum.Prototypes.InputButtons_Prototype))]
   [CustomPropertyDrawer(typeof(Quantum.Prototypes.PlatformAxis_Prototype))]
   partial class PrototypeDrawer {}

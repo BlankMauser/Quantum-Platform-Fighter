@@ -28,11 +28,14 @@ namespace Quantum.Editor {
 
     [System.Serializable]
     public partial class KnownObjectsContainer : QuantumEditorUtility.SerializableObjectsContainerBase {
+      public Quantum.AnimData[] AnimData = {};
+      public Quantum.attackData[] attackData = {};
       public Quantum.StateSet[] StateSet = {};
       public Quantum.State[] State = {};
       public Quantum.PlatformConfig[] PlatformConfig = {};
       public Quantum.PlatformControllerConfig[] PlatformControllerConfig = {};
       public Quantum.SimulationConfig[] SimulationConfig = {};
+      public Quantum.BSC_Dash[] BSC_Dash = {};
       public Quantum.BinaryData[] BinaryData = {};
       public Quantum.CharacterController2DConfig[] CharacterController2DConfig = {};
       public Quantum.CharacterController3DConfig[] CharacterController3DConfig = {};

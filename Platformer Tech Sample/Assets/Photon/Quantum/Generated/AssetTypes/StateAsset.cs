@@ -10,7 +10,7 @@
 using Quantum;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Quantum/State", order = Quantum.EditorDefines.AssetMenuPriorityStart + 468)]
+[CreateAssetMenu(menuName = "Quantum/State/State", order = Quantum.EditorDefines.AssetMenuPriorityStart + 468)]
 public partial class StateAsset : AssetBase {
   public Quantum.State Settings;
 

@@ -1,4 +1,5 @@
 ﻿namespace Quantum {
+    //State-specific tags. Primarily for transitions
     public enum StateTags {
         Basic,
         Attack,
@@ -13,4 +14,5 @@
         //Add More Tags Here
 
         }
+
     }

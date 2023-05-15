@@ -17,29 +17,33 @@ MonoBehaviour:
       Path: Resources/DB/States/InitialState
       Guid:
         Value: 1566452403617857191
+    Name: Init1
     Behaviours: []
     Tags: 05000000
+    EntryChecks:
+    - Conditions: []
+    PriorityLevel: 0
     Length: 65
     OverrideAnimation: 0
     Loop: 1
-  behaviours:
-  - rid: 5172066702784987139
+  behaviours: []
+  entryConditions:
+  - transitions:
+    - rid: 5172066906413465612
+  buffer:
+  - Conditions: []
   Animation:
     _FadeDuration: 0.25
     _Events:
       _NormalizedTimes: []
       _Callbacks: []
       _Names: []
-    _Clip: {fileID: 7400000, guid: 6bddcdfebb3a83e46991aa42b76c7259, type: 3}
+    _Clip: {fileID: 74461371588811068, guid: 7c9daa995c8082c4a986dc5f6a6ecb48, type: 2}
     _Speed: 1
     _NormalizedStartTime: NaN
+  Name: Init1
   references:
     version: 2
     RefIds:
-    - rid: 5172066702784987139
-      type: {class: VelocityImpulse, ns: Quantum, asm: quantum.code}
-      data:
-        Velocity:
-          RawValue: 1310
-        Duration:
-          RawValue: 65536
+    - rid: 5172066906413465612
+      type: {class: GroundedCheck, ns: Quantum, asm: quantum.code}

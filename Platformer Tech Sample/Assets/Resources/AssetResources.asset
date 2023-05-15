@@ -36,6 +36,11 @@ MonoBehaviour:
         Id:
           Value: 5
       ResourcePath: DB/Configs/SimulationConfig
+    - Path: Resources/DB/States/BSC_Dash
+      AssetRef:
+        Id:
+          Value: 238288471982921894
+      ResourcePath: DB/States/BSC_Dash
     - Path: Resources/DB/PlayerCharacter|EntityPrototype
       AssetRef:
         Id:
@@ -46,6 +51,11 @@ MonoBehaviour:
         Id:
           Value: 1212351385468893186
       ResourcePath: DB/PlatformPhysicsMaterial
+    - Path: Resources/DB/States/StateSet
+      AssetRef:
+        Id:
+          Value: 1293124923961604297
+      ResourcePath: DB/States/StateSet
     - Path: Resources/DB/States/InitialState
       AssetRef:
         Id:
@@ -76,6 +86,11 @@ MonoBehaviour:
         Id:
           Value: 2640079038811519263
       ResourcePath: DB/Map1_mesh
+    - Path: Resources/DB/States/Dash
+      AssetRef:
+        Id:
+          Value: 2726016637150437536
+      ResourcePath: DB/States/Dash
     - Path: Resources/DB/Configs/DefaultCharacterController3D
       AssetRef:
         Id:

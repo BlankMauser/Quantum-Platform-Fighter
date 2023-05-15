@@ -6,6 +6,35 @@
 using System;
 namespace Quantum.Prototypes.Unity {
   [System.SerializableAttribute()]
+  [Quantum.Prototypes.PrototypeAttribute(typeof(Quantum.HitboxTree))]
+  public class HitboxTree_Prototype : Quantum.PrototypeAdapter<Quantum.Prototypes.HitboxTree_Prototype> {
+    public Quantum.AssetRefattackData attacks;
+    [Quantum.Inspector.DictionaryAttribute()]
+    [Quantum.Inspector.DynamicCollectionAttribute()]
+    public DictionaryEntry_EntityRef_Int32_Prototype[] entitiesHit = System.Array.Empty<DictionaryEntry_EntityRef_Int32_Prototype>();
+
+    public sealed override Quantum.Prototypes.HitboxTree_Prototype Convert(EntityPrototypeConverter converter) {
+      var result = new Quantum.Prototypes.HitboxTree_Prototype();
+      result.attacks = this.attacks;
+      result.entitiesHit = System.Array.ConvertAll(this.entitiesHit, x => x.Convert(converter));
+      return result;
+    }
+  }
+  [System.SerializableAttribute()]
+  [Quantum.Prototypes.PrototypeAttribute(typeof(System.Collections.Generic.KeyValuePair<Quantum.EntityRef, System.Int32>))]
+  public class DictionaryEntry_EntityRef_Int32_Prototype : Quantum.PrototypeAdapter<Quantum.Prototypes.DictionaryEntry_EntityRef_Int32_Prototype> {
+    [Quantum.LocalReference]
+    public global::EntityPrototype Key;
+    public System.Int32 Value;
+
+    public sealed override Quantum.Prototypes.DictionaryEntry_EntityRef_Int32_Prototype Convert(EntityPrototypeConverter converter) {
+      var result = new Quantum.Prototypes.DictionaryEntry_EntityRef_Int32_Prototype();
+      converter.Convert(this.Key, out result.Key);
+      result.Value = this.Value;
+      return result;
+    }
+  }
+  [System.SerializableAttribute()]
   [Quantum.Prototypes.PrototypeAttribute(typeof(Quantum.PhysicsJoints3D))]
   public class PhysicsJoints3D_Prototype : Quantum.PrototypeAdapter<Quantum.Prototypes.PhysicsJoints3D_Prototype> {
     [Quantum.Inspector.DynamicCollectionAttribute()]

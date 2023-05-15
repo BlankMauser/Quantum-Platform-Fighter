@@ -16,6 +16,12 @@ namespace Quantum {
 
 /*            f.Assets.State(filter.abilityEntity->FSM.CurrentState).UpdateBehaviours(f, filter.abilityEntity, filter.Entity);*/
             StateMachineManager.UpdateStateMachine(f, filter.abilityEntity, filter.Entity);
+
+            //Check if any transitions are true
+            if (StateMachineManager.CheckTransitions(f, filter.abilityEntity, filter.Entity)) {
+                StateMachineManager.StateChange(f, filter.abilityEntity, filter.Entity);
+                }
+
             }
 
         }
