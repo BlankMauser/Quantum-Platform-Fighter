@@ -20,7 +20,8 @@ MonoBehaviour:
     Name: 
     Behaviours: []
     Tags: 
-    EntryChecks: []
+    EntryChecks:
+    - Conditions: []
     PriorityLevel: 0
     Length: 0
     OverrideAnimation: 0
@@ -56,7 +57,7 @@ MonoBehaviour:
     OverrideAnimation: 0
     Loop: 1
     Initial_Velocity:
-      RawValue: 0
+      RawValue: 3276800
   references:
     version: 2
     RefIds:

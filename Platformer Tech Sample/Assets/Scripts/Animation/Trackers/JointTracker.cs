@@ -23,3 +23,4 @@ public class HurtboxTracker {
     public FP size;
 
     }
+

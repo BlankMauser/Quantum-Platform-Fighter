@@ -46,6 +46,11 @@ MonoBehaviour:
         Id:
           Value: 349486177329593246
       ResourcePath: DB/PlayerCharacter
+    - Path: Resources/DB/AnimData/New Anim Data Asset
+      AssetRef:
+        Id:
+          Value: 640456666819936153
+      ResourcePath: DB/AnimData/New Anim Data Asset
     - Path: Resources/DB/PlatformPhysicsMaterial
       AssetRef:
         Id:
@@ -96,16 +101,6 @@ MonoBehaviour:
         Id:
           Value: 3004904473921469476
       ResourcePath: DB/Configs/DefaultCharacterController3D
-    - Path: Resources/DB/States/Emerson/Idle
-      AssetRef:
-        Id:
-          Value: 3107340284673347376
-      ResourcePath: DB/States/Emerson/Idle
-    - Path: Resources/DB/States/Emerson/Fair
-      AssetRef:
-        Id:
-          Value: 3212793503441604546
-      ResourcePath: DB/States/Emerson/Fair
     - Path: Resources/DB/PlatformConfigs/PlatformDemoConfig3
       AssetRef:
         Id:

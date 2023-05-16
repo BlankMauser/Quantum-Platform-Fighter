@@ -30,7 +30,7 @@ MonoBehaviour:
   - rid: 5172066906413465616
   entryConditions:
   - transitions:
-    - rid: 5172066906413465615
+    - rid: 6278992184024760320
   buffer:
   - Conditions: []
   Animation:
@@ -46,7 +46,14 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 5172066906413465615
+    - rid: 5172066906413465616
+      type: {class: VelocityImpulse, ns: Quantum, asm: quantum.code}
+      data:
+        Velocity:
+          RawValue: 2949120
+        Duration:
+          RawValue: 327680
+    - rid: 6278992184024760320
       type: {class: InputAnalogCheck, ns: Quantum, asm: quantum.code}
       data:
         CheckLeftStick: 0
@@ -100,10 +107,3 @@ MonoBehaviour:
         Buttons:
         - Button: 32
           holdType: 0
-    - rid: 5172066906413465616
-      type: {class: VelocityImpulse, ns: Quantum, asm: quantum.code}
-      data:
-        Velocity:
-          RawValue: 2949120
-        Duration:
-          RawValue: 327680

@@ -18,7 +18,7 @@ namespace Quantum {
     [Serializable]
     public class JointFrame {
 
-        public List<JointData> joints;
+        public JointData[] joints;
 
         }
 
@@ -33,11 +33,21 @@ namespace Quantum {
 
     public enum jointType {
 
-
+        Root = 0,
         Hip_L,
         Hip_R,
+        Spine_1,
+        Spine_2,
+        Neck,
+        Head,
         Arm_L,
         Arm_R,
+        Elbow_L,
+        Elbow_R,
+        Knee_L,
+        Knee_R,
+        Foot_L,
+        Foot_R,
         Weapon_base,
         Weapon_tip,
         Custom_1,

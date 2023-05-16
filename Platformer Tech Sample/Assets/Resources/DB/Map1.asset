@@ -86,7 +86,10 @@ MonoBehaviour:
     MapEntities: []
   Prototypes:
   - AbilityEntity: []
+    Animator: []
     BasicFields: []
+    HitboxTree: []
+    HurtboxTree: []
     Platform:
     - Config:
         Id:
@@ -176,7 +179,10 @@ MonoBehaviour:
     PhysicsJoints2D: []
     PhysicsJoints3D: []
   - AbilityEntity: []
+    Animator: []
     BasicFields: []
+    HitboxTree: []
+    HurtboxTree: []
     Platform:
     - Config:
         Id:
@@ -266,7 +272,10 @@ MonoBehaviour:
     PhysicsJoints2D: []
     PhysicsJoints3D: []
   - AbilityEntity: []
+    Animator: []
     BasicFields: []
+    HitboxTree: []
+    HurtboxTree: []
     Platform:
     - Config:
         Id:
@@ -356,7 +365,10 @@ MonoBehaviour:
     PhysicsJoints2D: []
     PhysicsJoints3D: []
   - AbilityEntity: []
+    Animator: []
     BasicFields: []
+    HitboxTree: []
+    HurtboxTree: []
     Platform:
     - Config:
         Id:
@@ -446,7 +458,10 @@ MonoBehaviour:
     PhysicsJoints2D: []
     PhysicsJoints3D: []
   - AbilityEntity: []
+    Animator: []
     BasicFields: []
+    HitboxTree: []
+    HurtboxTree: []
     Platform:
     - Config:
         Id:

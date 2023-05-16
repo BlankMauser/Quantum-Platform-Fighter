@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Photon.Deterministic;
 
 namespace Quantum {
@@ -18,16 +19,18 @@ namespace Quantum {
     [Serializable]
     public class HitboxFrame {
 
-        public HitboxData[] hitboxes;
+        public List<HitboxData> hitboxes;
 
         }
 
     [Serializable]
     public class HitboxData {
 
+        public jointType joint;
         public byte attackIndex;
         public FPVector3 offset;
         public FP size;
+        public bool interpolate;
 
         }
 

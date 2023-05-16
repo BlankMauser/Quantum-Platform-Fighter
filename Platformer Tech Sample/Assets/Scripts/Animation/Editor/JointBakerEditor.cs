@@ -39,7 +39,7 @@ public class JointBakerEditor : Editor
                 jointBaker.Sample(frame);
 
                 jointBaker.frames[frame] = new JointFrame(); // Initialize the element at the current frame index
-                jointBaker.frames[frame].joints = new List<JointData>(); // Initialize the joints list
+                jointBaker.frames[frame].joints = new JointData[18];
 
                 foreach (JointTracker j in jointBaker.joints) {
                     Vector3 positionOffset = j.transform.position - rootBone.position;
@@ -49,7 +49,7 @@ public class JointBakerEditor : Editor
                     jd.localPosition = new FPVector3(FP.FromFloat_UNSAFE(positionOffset.x), FP.FromFloat_UNSAFE(positionOffset.y), FP.FromFloat_UNSAFE(positionOffset.z));
                     jd.rotation = new FPQuaternion(FP.FromFloat_UNSAFE(rotationOffset.x), FP.FromFloat_UNSAFE(rotationOffset.y), FP.FromFloat_UNSAFE(rotationOffset.z), FP.FromFloat_UNSAFE(rotationOffset.w));
                     Debug.Log(jd);
-                    jointBaker.frames[frame].joints.Add(jd);
+                    jointBaker.frames[frame].joints[(int)j.joint] = jd;
 
                     }
 
